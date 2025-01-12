@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { Button } from "@/components/ui/button";
+import Logo from "@/components/Logo.vue";
+import Footer from "@/components/Footer.vue";
 </script>
 
 <template>
-  <main class="flex flex-col justify-center items-center h-screen gap-4">
-    <h1 class="font-bold text-2xl text-primary">Forecastly</h1>
-    <Button>Click Me</Button>
-  </main>
+  <div class="flex flex-col min-h-screen">
+    <main
+      class="flex-grow flex flex-col justify-start items-center gap-4 max-w-[1100px] mx-auto"
+    >
+      <Logo />
+    </main>
+    <Footer />
+  </div>
 </template>
