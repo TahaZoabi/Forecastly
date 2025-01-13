@@ -8,9 +8,9 @@ const currentTime = new Date().toLocaleString("en-US", {
 </script>
 
 <template>
-  <div class="w-90% p-8">
+  <div class="w-full p-6">
     <div
-      class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-xl bg-gradient-to-r from-blue-300 to-purple-500"
+      class="max-w-[500px] w-full mx-auto p-6 bg-white rounded-lg shadow-xl bg-gradient-to-r from-blue-300 to-purple-500"
     >
       <!-- Current Location Time -->
       <div class="flex justify-between items-center text-gray-700 mb-6">
