@@ -2,6 +2,7 @@
 import Logo from "@/components/Logo.vue";
 import Footer from "@/components/Footer.vue";
 import Search from "@/components/Search.vue";
+import WeatherCard from "@/components/WeatherCard.vue";
 </script>
 
 <template>
@@ -11,6 +12,7 @@ import Search from "@/components/Search.vue";
     >
       <Logo />
       <Search />
+      <WeatherCard />
       <Footer />
     </main>
   </div>
