@@ -3,14 +3,15 @@ import Logo from "@/components/Logo.vue";
 import Footer from "@/components/Footer.vue";
 import Search from "@/components/Search.vue";
 import WeatherCard from "@/components/WeatherCard.vue";
-import WeatherForecast from "@/components/WeatherForecast.vue";
+
 import { ref } from "vue";
 import type { WeatherData } from "@/lib/weather.ts";
+import ThreeDayForecast from "@/components/ThreeDayForecast.vue";
 
 const places = ref<WeatherData[]>([]);
 
 const addPlace = (data: WeatherData) => {
-  places.value.push(data);
+  places.value[0] = data;
 };
 </script>
 
@@ -23,9 +24,9 @@ const addPlace = (data: WeatherData) => {
       <Search @place-data="addPlace" />
       <div v-for="place in places" :key="place.location.name">
         <WeatherCard :place="place" />
+        <ThreeDayForecast :place="place" />
       </div>
 
-      <WeatherForecast />
       <Footer />
     </main>
   </div>

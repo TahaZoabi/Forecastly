@@ -19,12 +19,32 @@ export interface Current {
   humidity: number;
   feelslike_f: number;
   feelslike_c: number;
+  last_updated: string;
 
   condition: Condition;
+}
+
+export interface Day {
+  date: string;
+  date_epoch: number;
+  day: {
+    maxtemp_c: number;
+    maxtemp_f: number;
+    mintemp_c: number;
+    mintemp_f: number;
+    avgtemp_c: number;
+    avgtemp_f: number;
+    maxwind_mph: number;
+    maxwind_kph: number;
+    avghumidity: number;
+    condition: Condition;
+  };
 }
 
 export interface WeatherData {
   location: Location;
   current: Current;
-  forecast?: object;
+  forecast: {
+    forecastday: Day[];
+  };
 }
