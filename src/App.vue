@@ -4,6 +4,14 @@ import Footer from "@/components/Footer.vue";
 import Search from "@/components/Search.vue";
 import WeatherCard from "@/components/WeatherCard.vue";
 import WeatherForecast from "@/components/WeatherForecast.vue";
+import { ref } from "vue";
+import type { WeatherData } from "@/lib/weather.ts";
+
+const places = ref([]);
+
+const addPlace = (data: WeatherData) => {
+  places.value.push(data);
+};
 </script>
 
 <template>
@@ -12,8 +20,11 @@ import WeatherForecast from "@/components/WeatherForecast.vue";
       class="flex-grow flex flex-col justify-start items-center gap-4 bg-gray-100"
     >
       <Logo />
-      <Search />
-      <WeatherCard />
+      <Search @place-data="addPlace" />
+      <div v-for="place in places" :key="place.location.name">
+        <WeatherCard :place="place" />
+      </div>
+
       <WeatherForecast />
       <Footer />
     </main>
