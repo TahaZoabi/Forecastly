@@ -7,7 +7,7 @@ import WeatherForecast from "@/components/WeatherForecast.vue";
 import { ref } from "vue";
 import type { WeatherData } from "@/lib/weather.ts";
 
-const places = ref([]);
+const places = ref<WeatherData[]>([]);
 
 const addPlace = (data: WeatherData) => {
   places.value.push(data);
