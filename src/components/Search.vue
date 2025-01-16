@@ -3,6 +3,12 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-vue-next";
 import { reactive } from "vue";
 
+interface SearchTerm {
+  query: string;
+  timeout: number | undefined;
+  results: Array<{ id: string; name: string }>;
+}
+
 const emit = defineEmits(["place-data"]);
 
 const date = new Date().toLocaleString("en-US", {
@@ -12,9 +18,9 @@ const date = new Date().toLocaleString("en-US", {
   year: "numeric",
 });
 
-const searchTerm = reactive({
+const searchTerm = reactive<SearchTerm>({
   query: "",
-  timeout: null,
+  timeout: undefined,
   results: [],
 });
 
@@ -26,15 +32,14 @@ const handleSearch = () => {
         `http://api.weatherapi.com/v1/search.json?key=ab2d06f29c28457e90b73347251301&q=${searchTerm.query}`,
       );
 
-      const data = await res.json();
-      searchTerm.results = data;
+      searchTerm.results = await res.json();
     } else {
       searchTerm.results = [];
     }
   }, 500);
 };
 
-const getWeather = async (id) => {
+const getWeather = async (id: string) => {
   const res = await fetch(
     `http://api.weatherapi.com/v1/forecast.json?key=ab2d06f29c28457e90b73347251301&q=id:${id}&days=3&aqi=yes&alerts=no`,
   );
@@ -68,7 +73,7 @@ const getWeather = async (id) => {
         class="absolute w-full mt-2 bg-white rounded-lg shadow-lg max-h-60 overflow-y-auto z-10"
         v-if="searchTerm.results.length > 0"
       >
-        <ul v-for="place in searchTerm.results" :key="place">
+        <ul v-for="place in searchTerm.results" :key="place.id">
           <li
             class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
             @click="getWeather(place.id)"
