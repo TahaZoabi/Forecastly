@@ -20,6 +20,7 @@ export interface Current {
   feelslike_f: number;
   feelslike_c: number;
   last_updated: string;
+  is_day: number;
 
   condition: Condition;
 }
