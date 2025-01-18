@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-vue-next";
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 
 interface SearchTerm {
   query: string;
@@ -48,6 +48,29 @@ const getWeather = async (id: string) => {
   searchTerm.results = [];
   searchTerm.query = "";
 };
+
+// Get the user's current location
+const getUserLocation = async () => {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+
+      // Fetch weather data for the user's location
+      const res = await fetch(
+        `http://api.weatherapi.com/v1/forecast.json?key=ab2d06f29c28457e90b73347251301&q=${latitude},${longitude}&days=3&aqi=yes&alerts=no`,
+      );
+      const data = await res.json();
+      emit("place-data", data);
+    });
+  } else {
+    console.error("Geolocation is not supported by this browser.");
+  }
+};
+
+// Get user location on component mount
+onMounted(() => {
+  getUserLocation();
+});
 </script>
 
 <template>
