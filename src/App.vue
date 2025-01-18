@@ -7,9 +7,15 @@ import WeatherCard from "@/components/WeatherCard.vue";
 import { ref } from "vue";
 import type { WeatherData } from "@/lib/weather.ts";
 import ThreeDayForecast from "@/components/ThreeDayForecast.vue";
+import { Button } from "@/components/ui/button";
 
 const places = ref<WeatherData[]>([]);
 
+const fahrenheit = ref(false);
+
+const convertTemp = () => {
+  fahrenheit.value = !fahrenheit.value;
+};
 const addPlace = (data: WeatherData) => {
   places.value[0] = data;
 };
@@ -22,9 +28,13 @@ const addPlace = (data: WeatherData) => {
     >
       <Logo />
       <Search @place-data="addPlace" />
+
+      <Button @click="convertTemp"
+        >Convert To {{ fahrenheit ? "Celsius" : "Fahrenheit" }}</Button
+      >
       <div v-for="place in places" :key="place.location.name">
-        <WeatherCard :place="place" />
-        <ThreeDayForecast :place="place" />
+        <WeatherCard :place="place" :fahrenheit="fahrenheit" />
+        <ThreeDayForecast :place="place" :fahrenheit="fahrenheit" />
       </div>
 
       <Footer />

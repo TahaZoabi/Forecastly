@@ -6,6 +6,7 @@ import { Droplet, Wind } from "lucide-vue-next";
 defineProps<{
   day: Day;
   place: WeatherData;
+  fahrenheit: boolean;
 }>();
 </script>
 
@@ -43,7 +44,11 @@ defineProps<{
           />
           <div class="ml-4">
             <p class="text-4xl font-bold">
-              {{ Math.floor(day.day.maxtemp_c) }}&deg;C
+              {{
+                fahrenheit
+                  ? Math.floor(day.day.maxtemp_f)
+                  : Math.floor(day.day.maxtemp_c)
+              }}&deg;{{ fahrenheit ? "F" : "C" }}
             </p>
             <p class="text-lg">{{ day.day.condition.text }}</p>
           </div>
@@ -56,7 +61,10 @@ defineProps<{
       >
         <div class="flex justify-center items-center gap-2">
           <span><Wind /></span>
-          <p class="text-sm">Wind: {{ day.day.maxwind_kph }} kph</p>
+          <p class="text-sm">
+            Wind: {{ fahrenheit ? day.day.maxwind_mph : day.day.maxwind_kph }}
+            {{ fahrenheit ? "mp" : "km" }}/h
+          </p>
         </div>
         <div class="flex justify-center items-center gap-2">
           <span><Droplet /></span>

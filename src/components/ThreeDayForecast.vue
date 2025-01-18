@@ -4,11 +4,12 @@ import { defineProps } from "vue";
 import type { WeatherData } from "@/lib/weather.ts";
 defineProps<{
   place: WeatherData;
+  fahrenheit: boolean;
 }>();
 </script>
 
 <template>
   <div v-for="day in place.forecast.forecastday" :key="day.date_epoch">
-    <WeatherForecast :day="day" :place="place" />
+    <WeatherForecast :day="day" :place="place" :fahrenheit="fahrenheit" />
   </div>
 </template>

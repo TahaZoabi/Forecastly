@@ -6,6 +6,7 @@ import { Droplet, Wind } from "lucide-vue-next";
 
 const props = defineProps<{
   place: WeatherData;
+  fahrenheit: boolean;
 }>();
 
 // Computed property to extract and format the local time
@@ -51,10 +52,19 @@ const localTime = computed(() => {
       <!-- Temperature & Feels Like -->
       <div class="flex items-center mb-4">
         <span class="text-6xl font-bold"
-          >{{ Math.round(place.current.temp_c) }}&deg;C</span
+          >{{
+            fahrenheit
+              ? Math.round(place.current.temp_f)
+              : Math.round(place.current.temp_c)
+          }}&deg;{{ fahrenheit ? "F" : "C" }}</span
         >
         <p class="text-lg ml-4">
-          Feels like {{ Math.round(place.current.feelslike_c) }}&deg;C
+          Feels like
+          {{
+            fahrenheit
+              ? Math.round(place.current.feelslike_f)
+              : Math.round(place.current.feelslike_c)
+          }}&deg;{{ fahrenheit ? "F" : "C" }}
         </p>
       </div>
 
@@ -62,7 +72,11 @@ const localTime = computed(() => {
       <div class="grid grid-cols-2 gap-4 text-sm">
         <div class="flex items-center">
           <span><Wind /></span>
-          <p class="ml-2">Wind: {{ place.current.wind_kph }} kph</p>
+          <p class="ml-2">
+            Wind:
+            {{ fahrenheit ? place.current.wind_mph : place.current.wind_kph }}
+            {{ fahrenheit ? "mp" : "km" }}/h
+          </p>
         </div>
         <div class="flex items-center">
           <span><Droplet /></span>
