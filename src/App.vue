@@ -32,7 +32,7 @@ const addPlace = (data: WeatherData) => {
       <Button @click="convertTemp"
         >Convert To {{ fahrenheit ? "Celsius" : "Fahrenheit" }}</Button
       >
-      <div v-for="place in places" :key="place.location.name">
+      <div class="w-full" v-for="place in places" :key="place.location.name">
         <WeatherCard :place="place" :fahrenheit="fahrenheit" />
         <ThreeDayForecast :place="place" :fahrenheit="fahrenheit" />
       </div>

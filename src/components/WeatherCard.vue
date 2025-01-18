@@ -12,9 +12,14 @@ const props = defineProps<{
 // Computed property to extract and format the local time
 const localTime = computed(() => {
   const date = new Date(props.place.location.localtime);
-  const hours = date.getHours().toString().padStart(2, "0");
+  let hours = date.getHours().toString().padStart(2, "0");
   const minutes = date.getMinutes().toString().padStart(2, "0");
-  return `${hours}:${minutes}`;
+
+  const ampm = hours >= 12 ? "PM" : "AM";
+  // Convert to 12-hour format
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  return `${hours}:${minutes} ${ampm}`;
 });
 </script>
 
@@ -24,11 +29,14 @@ const localTime = computed(() => {
       :class="
         place.current.is_day === 1 ? 'bg-day text-black' : 'bg-night text-white'
       "
-      class="max-w-[500px] w-full mx-auto p-8 bg-white rounded-lg shadow-xl"
+      class="max-w-[500px] w-full mx-auto p-8 rounded-lg shadow-xl"
     >
       <!-- Current Location Time -->
-      <div class="flex justify-between items-center mb-6">
+      <div class="flex justify-between items-center mb-6 gap-6 w-full">
         <span class="text-sm"> Local Time {{ localTime }} </span>
+        <p class="text-lg">
+          {{ place.location.country }}
+        </p>
       </div>
 
       <!-- Weather Card Header -->
@@ -37,6 +45,7 @@ const localTime = computed(() => {
           <h2 class="text-3xl font-semibold">
             {{ place.location.name }}
           </h2>
+
           <p class="text-lg">
             {{ place.current.condition.text }}
           </p>

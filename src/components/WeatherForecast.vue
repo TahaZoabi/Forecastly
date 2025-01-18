@@ -11,26 +11,37 @@ defineProps<{
 </script>
 
 <template>
-  <section class="w-full flex justify-center items-center">
+  <section class="w-full p-6">
     <!-- Container with fixed max width -->
     <div
       :class="
         place.current.is_day === 1 ? 'bg-day text-black' : 'bg-night text-white'
       "
-      class="max-w-[500px] w-full p-4 my-4 rounded-lg shadow-xl"
+      class="max-w-[500px] w-full p-8 mx-auto my-4 rounded-lg shadow-xl"
     >
       <!-- Day Name -->
-      <h1 class="text-3xl font-semibold text-center mb-6">
-        {{
-          new Date(day.date).toLocaleDateString("en-US", {
-            weekday: "long",
-          })
-        }}
-      </h1>
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-semibold text-center mb-6">
+          {{
+            new Date(day.date).toLocaleDateString("en-US", {
+              weekday: "long",
+            })
+          }}
+        </h2>
+        <h1 class="text-2xl font-semibold text-center mb-6">
+          {{
+            new Date(day.date).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })
+          }}
+        </h1>
+      </div>
 
       <!-- Current Weather Section -->
       <div class="text-center mb-8">
-        <h3 class="text-xl font-semibold">
+        <h3 class="text-3xl font-semibold">
           {{ place.location.name }}
         </h3>
         <p class="text-sm">Updated: {{ place.current.last_updated }}</p>
